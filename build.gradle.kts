@@ -66,14 +66,6 @@ plugins {
     id("net.minecrell.licenser") version "0.4.1"
 
     /**
-     * Plugin for bootstrapping a JDK.
-     * If the Gradle 'wrapper' task is executed, additional code is injected
-     * to the generated 'gradlew' file that downloads and sets the 'JAVA_HOME'
-     * environment variable if no 'JAVA_HOME' variable is already available.
-     */
-    id("com.github.rmee.jdk-bootstrap") version "1.0.20190725142159"
-
-    /**
      * Plugin that configures the project as 'Implementation' project.
      */
     id("com.github.ptkltm.development.fullstackproject.implementation")
@@ -84,11 +76,6 @@ plugins {
      */
     kotlin(module = "jvm") version "1.3.61"
 }
-
-/**
- * Sets the project group to the name of the project.
- */
-group = name
 
 /**
  * Sets the description of the project.
@@ -175,16 +162,6 @@ dependencies {
         name = "junit-jupiter-engine",
         version = junitVersion
     )
-}
-
-
-/**
- * If the Gradle 'wrapper' task is executed, the generated 'gradlew' file is extended
- * by additional shell code for the download of AdoptOpenJDK 8u202-b08 if no 'JAVA_HOME' is
- * already defined.
- */
-jdk {
-    useAdoptOpenJdk8("jdk8u202-b08")
 }
 
 /**
@@ -521,10 +498,3 @@ afterEvaluate {
         }
     }
 }
-
-/**
- * Declares 'clean' and 'build' as the default task.
- * If './gradlew' is executed on Unix-based systems or 'gradlew' is executed on
- * the Windows operating system, these tasks are executed automatically.
- */
-defaultTasks("clean", "build")
