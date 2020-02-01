@@ -74,6 +74,11 @@ plugins {
     id("com.github.rmee.jdk-bootstrap") version "1.0.20190725142159"
 
     /**
+     * Plugin that configures the project as 'Implementation' project.
+     */
+    id("com.github.ptkltm.development.fullstackproject.implementation")
+
+    /**
      * Plugin for the configuration of the Kotlin infrastructure
      * for building Kotlin code based on the Java Virtual Machine.
      */
@@ -460,14 +465,14 @@ tasks {
     /**
      * Enables Junit 5 Jupiter during the test runtime.
      */
-    "test"(Test::class) {
+    test {
         useJUnitPlatform()
     }
 
     /**
      * Configures the Gradle wrapper with the version '6.1.1'.
      */
-    "wrapper"(Wrapper::class) {
+    wrapper {
         gradleVersion = "6.1.1"
     }
 }

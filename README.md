@@ -114,7 +114,7 @@ and can be applied via the following configurations to either a **settings.gradl
     ```kotlin
     buildscript {
         repositories {
-            maven(url = "https://dl.bintray.com/ptkltm/com.github.ptkltm.development/")
+            jcenter()
         }
         dependencies {
             classpath(
@@ -133,7 +133,7 @@ and can be applied via the following configurations to either a **settings.gradl
     ```groovy
     buildscript {
         repositories {
-            maven(url = "https://dl.bintray.com/ptkltm/com.github.ptkltm.development/")
+            jcenter()
         }
         dependencies {
             classpath 'com.github.ptkltm.development.fullstackproject.gradleplugin:com.github.ptkltm.development.fullstackproject.gradleplugin:0.1.0'
@@ -150,7 +150,7 @@ and can be applied via the following configurations to either a **settings.gradl
     ```kotlin
     buildscript {
         repositories {
-            maven(url = "https://dl.bintray.com/ptkltm/com.github.ptkltm.development/")
+            jcenter()
         }
         dependencies {
             classpath(
@@ -169,7 +169,7 @@ and can be applied via the following configurations to either a **settings.gradl
     ```groovy
     buildscript {
         repositories {
-            maven(url = "https://dl.bintray.com/ptkltm/com.github.ptkltm.development/")
+            jcenter()
         }
         dependencies {
             classpath 'com.github.ptkltm.development.fullstackproject.gradleplugin:com.github.ptkltm.development.fullstackproject.gradleplugin:0.1.0'
