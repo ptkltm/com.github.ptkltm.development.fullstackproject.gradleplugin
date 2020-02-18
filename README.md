@@ -28,8 +28,8 @@ state of each other.
 The aim of this repository is the definition on a clean predictable project structure for bundling the component
 projects of complex full stack projects.
 Gradle, the two Gradle plugins provided by the repository
-'[com.github.ptkltm.development/com.github.ptkltm.development.fullstackproject.gradleplugin](https://github.com/ptkltm/com.github.ptkltm.development.fullstackproject.gradleplugin)' and the Recursive Include Plugin provided by the
-repository '[com.github.ptkltm.development/com.github.ptkltm.development.recursiveinclude.gradleplugin](https://github.com/ptkltm/com.github.ptkltm.development.recursiveinclude.gradleplugin)' will be the clue for connecting the component
+'[com.github.ptkltm.development.fullstackproject.gradleplugin](https://github.com/ptkltm/com.github.ptkltm.development.fullstackproject.gradleplugin)' and the Recursive Include Plugin provided by the
+repository '[com.github.ptkltm.development.recursiveinclude.gradleplugin](https://github.com/ptkltm/com.github.ptkltm.development.recursiveinclude.gradleplugin)' will be the clue for connecting the component
 projects together.
 
 Each project is based on the following semantic components:
