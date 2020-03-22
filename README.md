@@ -105,7 +105,7 @@ composite build feature](https://docs.gradle.org/current/userguide/composite_bui
 The plugins with the ids 'com.github.ptkltm.development.fullstackproject.domain' and
 'com.github.ptkltm.development.fullstackproject.implementation' are hosted at 
 [Bintray](https://bintray.com/ptkltm/com.github.ptkltm.development/com.github.ptkltm.development.fullstackproject.gradleplugin) 
-and can be applied via the following configurations to either a **settings.gradle.kts** or a **settings.gradle** file.
+and can be applied via the following configurations to either a **build.gradle.kts** or a **build.gradle** file.
 
 - Configuration of the **build.gradle(.kts)** file in 'Domain' type projects:
 
