@@ -151,18 +151,16 @@ class FullStackProjectImplementationGradlePlugin : Plugin<Project> {
                  * 'clean' tasks of the included sub projects.
                  */
                 evaluatedProject.defineIncludedSubProjectTask(
-                    taskName = CLEAN_TASK_NAME,
-                    postAction = Action {
-                        evaluatedProject.delete(evaluatedProject.buildDir)
-                    }
-                ),
+                    taskName = CLEAN_TASK_NAME
+                ) {
+                    evaluatedProject.delete(evaluatedProject.buildDir)
+                },
                 /**
                  * Defines a 'build' task that depends on all 'build' tasks of the included sub projects.
                  */
                 evaluatedProject.defineIncludedSubProjectTask(
-                    taskName = BUILD_TASK_NAME,
-                    postAction = Action { }
-                )
+                    taskName = BUILD_TASK_NAME
+                ) {}
             )
             /**
              * Defines a 'publishAllPublicationsToMavenRootRepository' task that depends on all
@@ -171,19 +169,18 @@ class FullStackProjectImplementationGradlePlugin : Plugin<Project> {
              * directory.
              */
             evaluatedProject.defineIncludedSubProjectTask(
-                taskName = PUBLISH_TASK_NAME,
-                postAction = Action {
-                    copy {
-                        it.from(
+                taskName = PUBLISH_TASK_NAME
+            ) {
+                copy {
+                    it.from(
                             subprojects.map {
                                 subProject -> "${subProject.buildDir.absolutePath}${File
                                     .separatorChar}${subProject.name}$REPOSITORY_SUFFIX"
                             }.filter { mavenRepositoryPath -> file(mavenRepositoryPath).exists() }
-                        )
-                        it.into("${buildDir.absolutePath}${File.separatorChar}$mavenRootRepositoryFolderName")
-                    }
+                    )
+                    it.into("${buildDir.absolutePath}${File.separatorChar}$mavenRootRepositoryFolderName")
                 }
-            )
+            }
         }
     }
 
@@ -197,13 +194,12 @@ class FullStackProjectImplementationGradlePlugin : Plugin<Project> {
      * @receiver The project containing the task and the sub projects.
      * @param [taskName] The name of the task.
      * @param [postAction] The action that's executed at the end of the task.
-     * @param [T] The type of the task.
      * @return The name of the task. It's the value of the parameter [taskName].
      */
     private
-    fun <T : Task> Project.defineIncludedSubProjectTask(
+    fun Project.defineIncludedSubProjectTask(
         taskName: String,
-        postAction: Action<T>
+        postAction: Task.() -> Unit
     ) = defineIncludedTask(
             taskName = taskName,
             postAction = postAction,

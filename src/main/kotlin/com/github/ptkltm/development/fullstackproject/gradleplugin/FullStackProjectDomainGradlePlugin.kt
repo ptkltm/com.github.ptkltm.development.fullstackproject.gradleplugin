@@ -17,7 +17,6 @@
 package com.github.ptkltm.development.fullstackproject.gradleplugin
 
 import java.io.File
-import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -84,17 +83,16 @@ class FullStackProjectDomainGradlePlugin : Plugin<Project> {
          * @param [taskName] The name of the task.
          * @param [postAction] The action that's executed at the end of the task.
          * @param [dependentTasks] The tasks the configured task depends on.
-         * @param [T] The type of the task.
          * @return The name of the task. It's the value of the parameter [taskName].
          */
         @Suppress("UNCHECKED_CAST")
-        fun <T : Task> Project.defineIncludedTask(
+        fun Project.defineIncludedTask(
             taskName: String,
-            postAction: Action<T>,
+            postAction: Task.() -> Unit,
             dependentTasks: List<Any>
         ): String = (tasks.find { it.name == taskName } ?: tasks.create(taskName))
                 .dependsOn(dependentTasks)
-                .doLast { postAction.execute(it as T) }.name
+                .doLast(postAction).name
     }
 
     /**
@@ -131,18 +129,16 @@ class FullStackProjectDomainGradlePlugin : Plugin<Project> {
              * 'clean' tasks of the included builds.
              */
             defineIncludeBuildTask(
-                taskName = CLEAN_TASK_NAME,
-                postAction = Action {
-                    delete(buildDir)
-                }
-            ),
+                taskName = CLEAN_TASK_NAME
+            ) {
+                delete(buildDir)
+            },
             /**
              * Defines a 'build' task that depends on all 'build' tasks of the included builds.
              */
             defineIncludeBuildTask(
-                taskName = BUILD_TASK_NAME,
-                postAction = Action { }
-            )
+                taskName = BUILD_TASK_NAME
+            ) {}
         )
         /**
          * Defines a 'publishAllPublicationsToMavenRootRepository' task that depends on all
@@ -150,27 +146,25 @@ class FullStackProjectDomainGradlePlugin : Plugin<Project> {
          * in a folder with the name of project followed by the suffix '.repository' inside the build directory.
          */
         defineIncludeBuildTask(
-            taskName = PUBLISH_TASK_NAME,
-            postAction = Action {
-                copy {
-                    it.from(
+            taskName = PUBLISH_TASK_NAME
+        ) {
+            copy {
+                it.from(
                         gradle.includedBuilds.map { includedBuild ->
                             "${includedBuild.projectDir.absolutePath}${File.separatorChar}${Project
                                     .DEFAULT_BUILD_DIR_NAME}${File.separatorChar}${includedBuild
                                     .name}$REPOSITORY_SUFFIX"
                         }.filter { mavenRepositoryPath -> file(mavenRepositoryPath).exists() }
-                    )
-                    it.into("${buildDir.absolutePath}${File.separatorChar}${rootProject.name}$REPOSITORY_SUFFIX")
-                }
+                )
+                it.into("${buildDir.absolutePath}${File.separatorChar}${rootProject.name}$REPOSITORY_SUFFIX")
             }
-        )
+        }
         /**
          * Defines a 'wrapper' task that depends on all 'wrapper' tasks of the included builds.
          */
         defineIncludeBuildTask(
-            taskName = WRAPPER_TASK_NAME,
-            postAction = Action { }
-        )
+            taskName = WRAPPER_TASK_NAME
+        ) {}
     }
 
     /**
@@ -183,13 +177,12 @@ class FullStackProjectDomainGradlePlugin : Plugin<Project> {
      * @receiver The project containing the task and the sub builds.
      * @param [taskName] The name of the task.
      * @param [postAction] The post action that's executed at the end of the task.
-     * @param [T] The type of the task.
      * @return The name of the task. It's the value of the parameter [taskName].
      */
     private
-    fun <T : Task> Project.defineIncludeBuildTask(
+    fun Project.defineIncludeBuildTask(
         taskName: String,
-        postAction: Action<T>
+        postAction: Task.() -> Unit
     ) = defineIncludedTask(
             taskName = taskName,
             postAction = postAction,
