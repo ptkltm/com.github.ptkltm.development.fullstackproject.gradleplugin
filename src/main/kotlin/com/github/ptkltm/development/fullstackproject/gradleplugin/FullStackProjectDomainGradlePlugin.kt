@@ -85,7 +85,6 @@ class FullStackProjectDomainGradlePlugin : Plugin<Project> {
          * @param [dependentTasks] The tasks the configured task depends on.
          * @return The name of the task. It's the value of the parameter [taskName].
          */
-        @Suppress("UNCHECKED_CAST")
         fun Project.defineIncludedTask(
             taskName: String,
             postAction: Task.() -> Unit,
